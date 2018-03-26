@@ -2,7 +2,7 @@ import React from 'react'
 
 let IfLabel = (label) =>
 (
-    label.map((x)=>(<span className="label label-warning">{x}</span>))
+    label.map((x, i)=>(<span key={i} className="label label-warning">{x}</span>))
 )
 
 let toggleSelected = (message, fn)=>

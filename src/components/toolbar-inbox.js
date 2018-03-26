@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 
 const selectAll=(bulk, list, update)=>
 {
@@ -35,8 +35,9 @@ const addLabel=(label, list, update)=>
       {
         if(x.labels.findIndex(x=>x===label)===-1)
         {
-          x.labels.push(label);
-          update(x);
+          let obj = JSON.parse(JSON.stringify(x));
+          obj.labels.push(label);
+          update(obj);
         }
       }
     });
@@ -49,8 +50,9 @@ const removeLabel=(label, list, update)=>
         let ind=x.labels.findIndex(x=>x===label)
         if(ind!==-1)
         {
-          x.labels.splice(label,1);
-          update(x);
+          let obj = JSON.parse(JSON.stringify(x));
+          obj.labels.splice(label,1);
+          update(obj);
         }
       }
     });
@@ -82,7 +84,11 @@ const Toolbar =(props)=>
         <span className="badge badge">{unread}</span>
         unread message{unread===1?'':'s'}
       </p>
-
+      <a className="btn btn-danger"
+      onClick={props.compose}
+      >
+        <i className="fa fa-plus"></i>
+      </a>
       <button className="btn btn-default"
       onClick={()=>selectAll(bulk, props.inbox, props.updateState)}
       >{/*nested ternary says if theres zero selected, some selected or all selected*/}
@@ -104,7 +110,7 @@ const Toolbar =(props)=>
       <select className="form-control label-select">
         <option>Apply label</option>
         <option value="dev"
-          onClick = {()=>addLabel("dev", props.inbox, props.updateState)}
+          onClick = {()=>{addLabel("dev", props.inbox, props.updateState)}}
         >dev</option>
         <option value="personal"
           onClick = {()=>addLabel("personal", props.inbox, props.updateState)}
